@@ -124,15 +124,27 @@ will need to adjust the created config file to your needs and start the containe
 You can configure a decent part of the features seasonpackarr provides. I will explain the most important ones here in
 more detail.
 
-### qBittorrent Client Authentication
+### Torrent Client Configuration
 
-Each entry under `clients` connects seasonpackarr to one qBittorrent instance. You can authenticate with the traditional
-`username` and `password` fields, or with `apiKey` when using qBittorrent 5.2.0 or newer. If `apiKey` is set,
-seasonpackarr uses qBittorrent API key authentication for that client instead of username/password login.
+Each entry under `clients` connects seasonpackarr to one torrent client instance. Set the `type` field to either
+`"qbittorrent"` (default) or `"transmission"` to select the client type. The `preImportPath` field works identically
+for both client types.
+
+#### qBittorrent
+
+For qBittorrent clients, you can authenticate with the traditional `username` and `password` fields, or with `apiKey`
+when using qBittorrent 5.2.0 or newer. If `apiKey` is set, seasonpackarr uses qBittorrent API key authentication for
+that client instead of username/password login.
 
 If you use [qui's reverse proxy](https://getqui.com/docs/features/reverse-proxy/), set the client `host` to the full
 proxy URL, for example `http://localhost:7476/proxy/abc123...`, and leave `username`, `password`, and `apiKey` empty.
 qui keeps the qBittorrent session and handles authentication for proxied clients.
+
+#### Transmission
+
+For Transmission clients, set `type: "transmission"` and provide `username` and `password` for the Transmission RPC
+interface (no `apiKey` field). The default port is `9091`. The protocol version (legacy vs. JSON-RPC 2.0, introduced
+in Transmission 4.1) is auto-negotiated on first connect — no additional configuration is needed.
 
 ### Smart Mode
 
